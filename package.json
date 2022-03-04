@@ -48,11 +48,15 @@
 
         "@nestjs/core": "^8.0.0",
 
+        "@nestjs/jwt": "^8.0.0",
+
         "@nestjs/passport": "^8.2.1",
 
         "@nestjs/platform-express": "^8.0.0",
 
         "passport": "^0.5.2",
+
+        "passport-jwt": "^4.0.0",
 
         "passport-local": "^1.0.0",
 
@@ -77,6 +81,8 @@
         "@types/jest": "27.0.2",
 
         "@types/node": "^16.0.0",
+
+        "@types/passport-jwt": "^3.0.6",
 
         "@types/passport-local": "^1.0.34",
 
