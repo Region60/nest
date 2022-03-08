@@ -54,6 +54,8 @@
 
         "@nestjs/platform-express": "^8.0.0",
 
+        "mongoose": "^6.2.4",
+
         "passport": "^0.5.2",
 
         "passport-jwt": "^4.0.0",
