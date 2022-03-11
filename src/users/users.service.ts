@@ -11,15 +11,16 @@ export class UserService {
   ) {}
 
   async create(CreateUserDto: CreateUserDto): Promise<User> {
-    const createdCat = new this.userModel(CreateUserDto);
-    return createdCat.save();
+    const createdUser = new this.userModel(CreateUserDto);
+    console.log(createdUser)
+    return createdUser.save();
   }
 
   async findAll(): Promise<User[]> {
     return this.userModel.find().exec();
   }
 
-  async findOne(username): Promise<User>{
-    return this.userModel.findOne({name: username})
+  async findOne(user): Promise<User>{
+    return this.userModel.findOne({name: user.name}).exec()
   }
 }
