@@ -1,7 +1,7 @@
-import { CreateUserDto } from './create-user.dto';
-import { Model } from 'mongoose';
-import { Injectable, Inject } from '@nestjs/common';
-import { User } from './user.interface';
+import { CreateUserDto } from './create-user.dto'
+import { Model } from 'mongoose'
+import { Injectable, Inject } from '@nestjs/common'
+import { User } from './user.interface'
 
 @Injectable()
 export class UserService {
@@ -11,8 +11,9 @@ export class UserService {
   ) {}
 
   async create(CreateUserDto: CreateUserDto): Promise<User> {
-    const createdUser = new this.userModel(CreateUserDto);
-    return createdUser.save();
+    const createdUser = new this.userModel(CreateUserDto)
+    let result = await createdUser.save()
+    return result
   }
 
   async findAll(): Promise<User[]> {
