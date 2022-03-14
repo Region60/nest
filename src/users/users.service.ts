@@ -8,7 +8,7 @@ export class UserService {
   constructor(
     @Inject('USER_MODEL')
     private userModel: Model<User>,
-  ) {}
+  ) { }
 
   async create(CreateUserDto: CreateUserDto): Promise<User> {
     const createdUser = new this.userModel(CreateUserDto)
@@ -20,7 +20,11 @@ export class UserService {
     return this.userModel.find().exec();
   }
 
-  async findOne(user): Promise<User>{
-    return this.userModel.findOne({name: user.name}).exec()
+  async findOne(user): Promise<User> {
+    return this.userModel.findOne({ name: user.name }).exec()
+  }
+
+  delete(user) {
+    this.userModel.deleteOne({ name: user.name })
   }
 }

@@ -19,20 +19,29 @@ export class AuthService {
     return null
   }
 
-  async login(user: User) {
+  async login(user: User) { 
     const payload = { username: user.name, sub: user.userId }
     return {
       access_token: this.jwtService.sign(payload),
     }
   }
 
-  async createUser(userData: User) {
-    const user = await this.userService.findOne({ name: userData.name })
+  async createUser(user: User) {
+    const foundUser = await this.userService.findOne({ name: user.name })
     if (user) {
-      return 'a user with this email already exists'
+      return 'a user with this name already exists'
     }
-    const newUser = await this.userService.create(userData)
+    const newUser = await this.userService.create(user)
     const { name,email,id } = newUser
     return {name,email,id }
   }
+
+async deleteUser(user:User) {
+  console.log(user)
+  const foundUser = await this.userService.findOne({ name: user.name })
+  if (user) {
+    return 'a user with this name already exists'
+  }
+  this.userService.delete(user)
+}
 }

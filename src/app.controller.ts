@@ -1,7 +1,8 @@
-import { Controller, Get, Request, Post, UseGuards,Body } from '@nestjs/common'
+import { Controller, Get, Request, Post, UseGuards,Body, Delete } from '@nestjs/common'
 import { JwtAuthGuard } from './auth/jwt-auth.guard'
 import { LocalAuthGuard } from './auth/local-auth.guard'
 import { AuthService } from './auth/auth.service'
+import { JwtStrategy } from './auth/jwt.stratagy'
 
 @Controller()
 export class AppController {
@@ -22,5 +23,11 @@ export class AppController {
   @Get('profile')
   getProfile(@Request() req) {
     return req.user
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('auth/delete')
+  delete(@Request() req) {
+    return this.authService.deleteUser(req.user)
   }
 }
