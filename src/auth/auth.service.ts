@@ -10,17 +10,19 @@ export class AuthService {
     private jwtService: JwtService
   ) { }
 
-  async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.userService.findOne({ name: username })
-    if (user && user.password === pass) {
-      const { password, ...result } = user
+  async validateUser(name: string, password: string): Promise<any> {
+    const user = await this.userService.findOne({ name })
+    if (user && user.password === password) {
+      const {id,name} = user
+      const result = {id,name}
+
       return result
     }
     return null
   }
 
   async login(user: User) { 
-    const payload = { username: user.name, sub: user.userId }
+    const payload = { username: user.name, sub: user.id }
     return {
       access_token: this.jwtService.sign(payload),
     }
@@ -28,7 +30,7 @@ export class AuthService {
 
   async createUser(user: User) {
     const foundUser = await this.userService.findOne({ name: user.name })
-    if (user) {
+    if (foundUser) {
       return 'a user with this name already exists'
     }
     const newUser = await this.userService.create(user)
@@ -37,9 +39,8 @@ export class AuthService {
   }
 
 async deleteUser(user:User) {
-  console.log(user)
   const foundUser = await this.userService.findOne({ name: user.name })
-  if (user) {
+  if (!foundUser) {
     return 'a user with this name already exists'
   }
   this.userService.delete(user)
