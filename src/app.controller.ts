@@ -21,12 +21,13 @@ export class AppController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req) {
+    console.log(req.user)
     return req.user
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete('auth/delete')
-  delete(@Request() req) {
-    return this.authService.deleteUser(req.user)
+  delete(@Body() body) {
+    return this.authService.deleteUser(body)
   }
 }

@@ -25,9 +25,8 @@ export class UserService {
   }
 
   delete(user) {
-   // console.log(user)
     let result = this.userModel.deleteOne({ name: user.name }).exec()
-
+    return result
 
   }
 }
