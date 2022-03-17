@@ -24,9 +24,14 @@ export class UserService {
     return this.userModel.findOne({ name: user.name }).exec()
   }
 
-  delete(user) {
+  async delete(user) {
     let result = this.userModel.deleteOne({ name: user.name }).exec()
     return result
-
   }
+
+  async update(user) {
+    let result = this.userModel.updateOne({name : user.name}, {$set: {password : user.password}})
+    return result
+  }
+
 }
