@@ -1,5 +1,5 @@
 import { UserService } from 'src/users/users.service';
-import { Controller, Get, Request, Post, UseGuards,Body, Delete, Put } from '@nestjs/common'
+import { Controller, Get, Request, Post, UseGuards, Body, Delete, Put } from '@nestjs/common'
 import { JwtAuthGuard } from './auth/jwt-auth.guard'
 import { LocalAuthGuard } from './auth/local-auth.guard'
 import { AuthService } from './auth/auth.service'
@@ -9,11 +9,11 @@ export class AppController {
   constructor(
     private authService: AuthService,
     private userService: UserService
-    ) { }
+  ) { }
 
   @Post('auth/register')
-  async createUser(@Body() body){
-    return  this.authService.createUser(body)
+  async createUser(@Body() body) {
+    return this.authService.createUser(body)
   }
 
   @UseGuards(LocalAuthGuard)
@@ -24,7 +24,7 @@ export class AppController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Body() body) {
+  async getProfile(@Body() body) {
     return this.authService.getUser(body)
   }
 
@@ -37,6 +37,12 @@ export class AppController {
   @UseGuards(JwtAuthGuard)
   @Put('update')
   update(@Body() body) {
-    return this.userService.update(body)}
-  
+    return this.userService.update(body)
+  }
+
+  @Get('getall')
+  getAll() {
+    return this.userService.getAll()
+  }
+
 }

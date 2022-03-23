@@ -16,21 +16,21 @@ export class UserService {
     return result
   }
 
-  async findAll(): Promise<User[]> {
+  async getAll(): Promise<User[]> {
     return this.userModel.find().exec();
   }
 
   async findOne(user): Promise<User> {
-    return this.userModel.findOne({ name: user.name }).exec()
+    return this.userModel.findOne({ username: user.username }).exec()
   }
 
   async delete(user) {
-    let result = this.userModel.deleteOne({ name: user.name }).exec()
+    let result = this.userModel.deleteOne({ username: user.username }).exec()
     return result
   }
 
   async update(user) {
-    let result = this.userModel.updateOne({name : user.name}, {$set: {password : user.password}})
+    let result = this.userModel.updateOne({username : user.username}, {$set: {password : user.password}})
     return result
   }
 
