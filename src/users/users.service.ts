@@ -16,8 +16,14 @@ export class UserService {
     return result
   }
 
-  async getAll(): Promise<User[]> {
-    return this.userModel.find().exec();
+  async getAll() {
+    let users = await this.userModel.find().exec()
+    let result = users.map((i) => {
+      let { password, username, email, id} = i
+      return {username,email,id}
+    })
+    console.log("типизировать getAll usersService")
+    return result
   }
 
   async findOne(user): Promise<User> {
@@ -30,7 +36,7 @@ export class UserService {
   }
 
   async update(user) {
-    let result = this.userModel.updateOne({username : user.username}, {$set: {password : user.password}})
+    let result = this.userModel.updateOne({ username: user.username }, { $set: { password: user.password } })
     return result
   }
 

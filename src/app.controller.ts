@@ -12,8 +12,8 @@ export class AppController {
   ) { }
 
   @Post('auth/register')
-  async createUser(@Body() body) {
-    return this.authService.createUser(body)
+  async createUser(@Body() user) {
+    return this.authService.createUser(user)
   }
 
   @UseGuards(LocalAuthGuard)
@@ -24,20 +24,20 @@ export class AppController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  async getProfile(@Body() body) {
-    return this.authService.getUser(body)
+  async getProfile(@Body() user) {
+    return this.authService.getUser(user)
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete('auth/delete')
-  delete(@Body() body) {
-    return this.authService.deleteUser(body)
+  delete(@Body() user) {
+    return this.authService.deleteUser(user)
   }
 
   @UseGuards(JwtAuthGuard)
   @Put('update')
-  update(@Body() body) {
-    return this.userService.update(body)
+  update(@Body() user) {
+    return this.userService.update(user)
   }
 
   @Get('getall')

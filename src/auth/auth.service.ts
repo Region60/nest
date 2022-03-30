@@ -30,13 +30,18 @@ export class AuthService {
   }
 
   async createUser(user: User) {
-    const foundUser = await this.userService.findOne({ email: user.username })
+    const foundUser = await this.userService.findOne({ username: user.username })
     if (foundUser) {
       return 'a user with this username already exists'
+    } else {
+      const foundUser = await this.userService.findOne({ email: user.email })
+      if (foundUser) {
+        return 'a user with this email already exists'
+      }
+      const newUser = await this.userService.create(user)
+      const { username, email, id } = newUser
+      return { username, email, id }
     }
-    const newUser = await this.userService.create(user)
-    const { username, email, id } = newUser
-    return { username, email, id }
   }
 
   async deleteUser(user: User) {
@@ -47,11 +52,12 @@ export class AuthService {
     return this.userService.delete(user)
   }
 
-  async getUser (user:User) {
+  async getUser(user: User) {
     const foundUser = await this.userService.findOne({ username: user.username })
     if (!foundUser) {
       return 'a user with this username already exists'
     }
-    return foundUser
+    let { username, email, id } = foundUser
+    return { username, email, id }
   }
 }
