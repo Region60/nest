@@ -1,5 +1,6 @@
 import { HttpCode, Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
+import { CreateUserDto } from 'src/users/user.dto/create-user.dto'
 import { User } from 'src/users/user.interface'
 import { UserService } from 'src/users/users.service'
 
@@ -29,19 +30,17 @@ export class AuthService {
     }
   }
 
-  async createUser(user: User) {
-    const foundUser = await this.userService.findOne({ username: user.username })
+  async createUser(user:CreateUserDto) {
+    const foundUser = await this.userService.findOne({email: user.email})
+    console.log(foundUser)
+    console.log(user.email)
     if (foundUser) {
       return 'a user with this username already exists'
-    } else {
-      const foundUser = await this.userService.findOne({ email: user.email })
-      if (foundUser) {
-        return 'a user with this email already exists'
-      }
+    }
       const newUser = await this.userService.create(user)
       const { username, email, id } = newUser
       return { username, email, id }
-    }
+    
   }
 
   async deleteUser(user: User) {

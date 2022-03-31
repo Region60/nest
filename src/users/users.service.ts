@@ -1,4 +1,4 @@
-import { CreateUserDto } from './create-user.dto'
+import { CreateUserDto } from './user.dto/create-user.dto'
 import { Model } from 'mongoose'
 import { Injectable, Inject } from '@nestjs/common'
 import { User } from './user.interface'
@@ -22,7 +22,6 @@ export class UserService {
       let { password, username, email, id} = i
       return {username,email,id}
     })
-    console.log("типизировать getAll usersService")
     return result
   }
 
