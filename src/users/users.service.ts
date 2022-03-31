@@ -25,8 +25,8 @@ export class UserService {
     return result
   }
 
-  async findOne(user): Promise<User> {
-    return this.userModel.findOne({ username: user.username }).exec()
+  async findOne(value): Promise<User> {
+    return this.userModel.findOne(value).exec()
   }
 
   async delete(user) {
