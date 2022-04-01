@@ -31,9 +31,7 @@ export class AuthService {
   }
 
   async createUser(user:CreateUserDto) {
-    const foundUser = await this.userService.findOne({email: user.email})
-    console.log(foundUser)
-    console.log(user.email)
+    const foundUser = await this.userService.findOne({username: user.username})
     if (foundUser) {
       return 'a user with this username already exists'
     }

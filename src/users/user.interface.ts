@@ -8,3 +8,7 @@ export interface User extends Document {
    readonly userId?: any
 }
 
+export type FindUserType =  {
+   username?: string
+   email?: string
+}
