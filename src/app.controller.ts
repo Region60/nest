@@ -43,8 +43,8 @@ export class AppController {
   }
 
   @Get('getall')
-  getAll() {
-    return this.userService.getAll()
+  getAll(@Body() body) {
+    return this.userService.getAll(body.page, body.count)
   }
 
 }

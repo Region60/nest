@@ -1,5 +1,4 @@
 import * as mongoose from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate-v2'
 
 export const UserSchema = new mongoose.Schema({
   username: String,
@@ -7,4 +6,3 @@ export const UserSchema = new mongoose.Schema({
   password: String,
 });
 
-UserSchema.plugin(mongoosePaginate)

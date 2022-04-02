@@ -18,24 +18,8 @@ export class UserService {
     return result
   }
 
-  async getAll(request) {
-    let options = {
-      page: request.page,
-      limit: request.quanity,
-      collation: {
-        locate: 'en'
-      }
-    }
-
-    let users = await this.userModel.paginate({},options, (err,result)=>{
-      if (err){
-         throw new Error(err)
-      }
-return resourceLimits
-    })
-
-
-
+  async getAll(page:number, count:number) {        
+    let users = await this.userModel.find().sort('username').skip(count*page-count).limit(count)
     let result = users.map((i) => {
       let { password, username, email, id } = i
       return { username, email, id }
