@@ -4,6 +4,7 @@ import { Controller, Get, Request, Post, UseGuards, Body, Delete, Put } from '@n
 import { JwtAuthGuard } from './auth/jwt-auth.guard'
 import { LocalAuthGuard } from './auth/local-auth.guard'
 import { AuthService } from './auth/auth.service'
+import { DeleteUserDto } from './users/user.dto/delete-user.dto';
 
 @Controller()
 export class AppController {
@@ -32,7 +33,7 @@ export class AppController {
 
   @UseGuards(JwtAuthGuard)
   @Delete('auth/delete')
-  delete(@Body() user) {
+  delete(@Body() user: DeleteUserDto) {
     return this.authService.deleteUser(user)
   }
 

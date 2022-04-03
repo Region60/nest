@@ -1,7 +1,9 @@
 import { HttpCode, Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { CreateUserDto } from 'src/users/user.dto/create-user.dto'
-import { User } from 'src/users/user.interface'
+import { DeleteUserDto } from 'src/users/user.dto/delete-user.dto'
+import { LoginUserDto } from 'src/users/user.dto/login-user.dto '
+import { User } from 'src/users/user.interfaces'
 import { UserService } from 'src/users/users.service'
 
 @Injectable()
@@ -22,7 +24,7 @@ export class AuthService {
     return null
   }
 
-  async login(user: User) {
+  async login(user: LoginUserDto) {
     const payload = { username: user.username, sub: user.id }
     return {
       access_token: this.jwtService.sign(payload),
@@ -40,7 +42,7 @@ export class AuthService {
     
   }
 
-  async deleteUser(user: User) {
+  async deleteUser(user) {
     const foundUser = await this.userService.findOne({ username: user.username })
     if (!foundUser) {
       return 'a user with this username already exists'

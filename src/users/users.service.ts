@@ -1,8 +1,8 @@
 import { CreateUserDto } from './user.dto/create-user.dto'
 import { Model } from 'mongoose'
 import { Injectable, Inject } from '@nestjs/common'
-import { User } from './user.interface'
-import { FindUserType } from './user.interface'
+import { User } from './user.interfaces'
+import { FindUserType } from './user.interfaces'
 import { resourceLimits } from 'worker_threads'
 
 @Injectable()
