@@ -1,3 +1,4 @@
+import { GetUserDto } from './users/user.dto/get-user.dto';
 import { CreateUserDto } from './users/user.dto/create-user.dto';
 import { UserService } from 'src/users/users.service';
 import { Controller, Get, Request, Post, UseGuards, Body, Delete, Put } from '@nestjs/common'
@@ -15,7 +16,6 @@ export class AppController {
 
   @Post('auth/register')
   async createUser(@Body() CreateUserDto: CreateUserDto) {
-    console.log(CreateUserDto)
     return this.authService.createUser(CreateUserDto)
   }
 
@@ -27,8 +27,8 @@ export class AppController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  async getProfile(@Body() user) {
-    return this.authService.getUser(user)
+  async getProfile(@Body() body:GetUserDto) {
+    return this.authService.getUser(body)
   }
 
   @UseGuards(JwtAuthGuard)

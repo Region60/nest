@@ -50,8 +50,8 @@ export class AuthService {
     return this.userService.delete(user)
   }
 
-  async getUser(user: User) {
-    const foundUser = await this.userService.findOne({ username: user.username })
+  async getUser(value) {
+    const foundUser = await this.userService.findOne(value)
     if (!foundUser) {
       return 'a user with this username already exists'
     }
