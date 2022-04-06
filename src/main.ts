@@ -3,9 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  console.log("типизировать getAll usersService")
   console.log("написать тесты")
-  console.log("дописать дто ")
   console.log("реализовать два вида регистрации и два вида логинизации")
 
   const app = await NestFactory.create(AppModule);

@@ -2,7 +2,7 @@ import { CreateUserDto } from './user.dto/create-user.dto'
 import { Model } from 'mongoose'
 import { Injectable, Inject } from '@nestjs/common'
 import { resourceLimits } from 'worker_threads'
-import { User } from './user.interfaces'
+import { FindUserType, User } from './user.interfaces'
 
 @Injectable()
 export class UserService {
@@ -26,21 +26,8 @@ export class UserService {
     return { username, email, id }
   }
 
-  async getAll(request) {
-    let options = {
-      page: request.page,
-      limit: request.quanity,
-      collation: {
-        locate: 'en'
-      }
-    }
-
-    let users = await this.userModel.paginate({}, options, (err, result) => {
-      if (err) {
-        throw new Error(err)
-      }
-      return resourceLimits
-    })
+  async getAll(page: number, count: number) {
+    let users = await this.userModel.find().sort('username').skip(count * page - count).limit(count)
 
     let result = users.map((i) => {
       let { password, username, email, id } = i
@@ -58,7 +45,7 @@ export class UserService {
     return result
   }
 
-  async update(user: CreateUserDto) {
+  async update(user) {
     let result = this.userModel.updateOne({ username: user.username }, { $set: { password: user.password } })
     return result
   }

@@ -18,7 +18,6 @@ export class AuthService {
     if (user && user.password === password) {
       const { id, username } = user
       const result = { id, username }
-
       return result
     }
     return null
