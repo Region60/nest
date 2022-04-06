@@ -1,9 +1,8 @@
 import { CreateUserDto } from './user.dto/create-user.dto'
 import { Model } from 'mongoose'
 import { Injectable, Inject } from '@nestjs/common'
-import { User } from './user.interfaces'
-import { FindUserType } from './user.interfaces'
 import { resourceLimits } from 'worker_threads'
+import { User } from './user.interfaces'
 
 @Injectable()
 export class UserService {
@@ -18,8 +17,31 @@ export class UserService {
     return result
   }
 
-  async getAll(page:number, count:number) {        
-    let users = await this.userModel.find().sort('username').skip(count*page-count).limit(count)
+  async getUser(value) {
+    const foundUser = await this.findOne(value)
+    if (!foundUser) {
+      return 'a user with this username already exists'
+    }
+    let { username, email, id } = foundUser
+    return { username, email, id }
+  }
+
+  async getAll(request) {
+    let options = {
+      page: request.page,
+      limit: request.quanity,
+      collation: {
+        locate: 'en'
+      }
+    }
+
+    let users = await this.userModel.paginate({}, options, (err, result) => {
+      if (err) {
+        throw new Error(err)
+      }
+      return resourceLimits
+    })
+
     let result = users.map((i) => {
       let { password, username, email, id } = i
       return { username, email, id }

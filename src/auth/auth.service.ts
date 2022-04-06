@@ -54,12 +54,5 @@ export class AuthService {
     return this.userService.delete(user)
   }
 
-  async getUser(value) {
-    const foundUser = await this.userService.findOne(value)
-    if (!foundUser) {
-      return 'a user with this username already exists'
-    }
-    let { username, email, id } = foundUser
-    return { username, email, id }
-  }
+
 }

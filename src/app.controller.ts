@@ -28,7 +28,7 @@ export class AppController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   async getProfile(@Body() body:GetUserDto) {
-    return this.authService.getUser(body)
+    return this.userService.getUser(body)
   }
 
   @UseGuards(JwtAuthGuard)
