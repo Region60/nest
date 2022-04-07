@@ -40,14 +40,11 @@ export class AppController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put('update')
+  @Put('updatepass')
   update(@Body() UpdateUserDto: UpdateUserDto) {
-    return this.userService.update(UpdateUserDto)
+    return this.userService.updatePass(UpdateUserDto)
   }
 
-  @Get('getall')
-  getAll(@Body() GetAllUserDto: GetAllUserDto) {
-    return this.userService.getAll(GetAllUserDto.page, GetAllUserDto.count)
-  }
+
 
 }

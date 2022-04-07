@@ -45,7 +45,7 @@ export class UserService {
     return result
   }
 
-  async update(user) {
+  async updatePass(user) {
     let result = this.userModel.updateOne({ username: user.username }, { $set: { password: user.password } })
     return result
   }
