@@ -1,13 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsEmail, IsString } from 'class-validator'
+import { IsEmail, IsNumber,  } from 'class-validator'
 
 export class GetAllUserDto {
     @ApiProperty()
-    @IsString()
+    @IsNumber()
     count: number
 
     @ApiProperty()
-    @IsEmail()
+    @IsNumber()
     page: number
 
 }
