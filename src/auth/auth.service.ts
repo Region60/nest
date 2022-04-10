@@ -1,10 +1,10 @@
-import { HttpCode, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { CreateUserDto } from 'src/users/user.dto/create-user.dto'
-import { DeleteUserDto } from 'src/users/user.dto/delete-user.dto'
 import { LoginUserDto } from 'src/users/user.dto/login-user.dto '
-import { User } from 'src/users/user.interfaces'
 import { UserService } from 'src/users/users.service'
+import * as bcrypt from 'bcrypt';
+
 
 @Injectable()
 export class AuthService {
@@ -14,8 +14,9 @@ export class AuthService {
   ) { }
 
   async validateUser(username: string, password: string): Promise<any> {
-    const user = await this.userService.findOne({username})
-    if (user && user.password === password) {
+    const user = await this.userService.findOne({ username })
+    const isMatch = await bcrypt.compare(password, user.password)
+    if (user && isMatch) {
       const { id, username } = user
       const result = { id, username }
       return result
@@ -30,19 +31,22 @@ export class AuthService {
     }
   }
 
-  async createUser(user:CreateUserDto) {
-    const foundUserByUsername = await this.userService.findOne({username: user.username})
+  async createUser(user: CreateUserDto) {
+    const foundUserByUsername = await this.userService.findOne({ username: user.username })
     if (foundUserByUsername) {
       return 'a user with this username already exists'
     }
-    const foundUserByUserByEmail = await this.userService.findOne({email: user.email})
+    const foundUserByUserByEmail = await this.userService.findOne({ email: user.email })
     if (foundUserByUserByEmail) {
       return 'a user with this email already exists'
     }
-      const newUser = await this.userService.create(user)
-      const { username, email, id } = newUser
-      return { username, email, id }
-    
+    const hash = await bcrypt.hash(user.password, 10)
+    user.password = hash
+console.log(hash)
+    const newUser = await this.userService.create(user)
+    const { username, email, id } = newUser
+    return { username, email, id }
+
   }
 
   async deleteUser(user) {
