@@ -58,7 +58,7 @@
 
         "@types/mongoose-paginate-v2": "^1.4.3",
 
-        "bcrypt": "^5.0.1",
+        "bcryptjs": "^2.4.3",
 
         "class-transformer": "^0.5.1",
 
@@ -137,8 +137,11 @@
     },
 
     "jest": {
+
         "moduleNameMapper": {
+
             "^src/(.*)$": "<rootDir>/$1"
+
         },
 
         "moduleFileExtensions": [
@@ -174,3 +177,4 @@
     }
 
 }
+

@@ -1,7 +1,11 @@
+import { JwtService } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing'
+import { UserService } from 'src/users/users.service';
 import { AuthController } from './auth.controller'
-import { CreateUserDto } from 'src/users/user.dto/create-user.dto'
 import { AuthService } from './auth.service';
+import { JwtStrategy } from './jwt.stratagy';
+import { LocalStrategy } from './local.strategy';
 
 
 describe('AuthController', () => {
@@ -11,7 +15,8 @@ describe('AuthController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
-      providers: [AuthService]
+      providers: [UserService, AuthService],
+      
     }).compile();
 
     controller = module.get<AuthController>(AuthController)
@@ -20,7 +25,7 @@ describe('AuthController', () => {
   
 
   it('should be defined', () => {
-    const result: any=  {username:'name',email: 'email', password:'password' }
+    const result: any=  {username:'name',email: 'email', id:123 }
     jest.spyOn(services, 'createUser').mockImplementation(() => result);
 
     expect(controller.createUser({username:'name',email: 'email', password:'password' })).toBe(result);
