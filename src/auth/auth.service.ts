@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { HttpException, Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { CreateUserDto } from 'src/users/user.dto/create-user.dto'
 import { LoginUserDto } from 'src/users/user.dto/login-user.dto '
@@ -34,15 +34,15 @@ export class AuthService {
   async createUser(user: CreateUserDto) {
     const foundUserByUsername = await this.userService.findOne({ username: user.username })
     if (foundUserByUsername) {
-      return 'a user with this username already exists'
+      throw new HttpException('a user with this username already exists', 404)
     }
     const foundUserByUserByEmail = await this.userService.findOne({ email: user.email })
     if (foundUserByUserByEmail) {
-      return 'a user with this email already exists'
+      throw new HttpException('a user with this email already exists', 404)
     }
     const hash = await bcrypt.hash(user.password, 10)
     user.password = hash
-console.log(hash)
+    console.log(hash)
     const newUser = await this.userService.create(user)
     const { username, email, id } = newUser
     return { username, email, id }
@@ -52,7 +52,7 @@ console.log(hash)
   async deleteUser(user) {
     const foundUser = await this.userService.findOne({ username: user.username })
     if (!foundUser) {
-      return 'a user with this username already exists'
+      throw new HttpException('a user with this username already exists', 404)
     }
     return this.userService.delete(user)
   }
