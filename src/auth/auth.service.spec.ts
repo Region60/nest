@@ -1,18 +1,33 @@
+import { AuthController } from './auth.controller';
+import { JwtStrategy } from './jwt.stratagy';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing';
+import { UsersModule } from 'src/users/users.module';
 import { AuthService } from './auth.service';
+import { jwtConstants } from './constants';
+import { LocalStrategy } from './local.strategy';
 
 describe('AuthService', () => {
   let service: AuthService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthService],
-    }).compile();
+      imports: [
+        UsersModule,
+        PassportModule,
+        JwtModule.register({
+          secret: jwtConstants.secret,
+          signOptions: { expiresIn: '12h' },
+        }),
+      ],
+      providers: [AuthService, LocalStrategy, JwtStrategy],
+      controllers: [AuthController]}).compile();
 
     service = module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
+    expect(service.login).toBeDefined();
   });
 });

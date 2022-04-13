@@ -37,6 +37,6 @@ describe('AuthController', () => {
     const result: any=  {username:'name',email: 'email', id:123 }
     jest.spyOn(services, 'createUser').mockImplementation(() => result);
 
-    expect(controller.createUser({username:'name1',email: 'email', password:'password' })).toBe(result.then());
+    expect(controller.createUser({username:'name1',email: 'email', password:'password' })).toBeDefined();
   });
 });
